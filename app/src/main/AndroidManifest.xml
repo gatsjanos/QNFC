@@ -7,8 +7,8 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".WriteNFCActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -36,7 +37,11 @@
                     android:scheme="vnd.android.nfc" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScanQRCodeActivity"></activity>
+
+        <activity
+            android:name=".ScanQRCodeActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

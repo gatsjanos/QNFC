@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">QNFC</string>
-    <string name="result_text_default">Focus the camera to the QR code</string>
+    <string name="result_text_default">Please focus camera to QR Code</string>
+
+    <string-array name="Write_modes_array">
+        <item>URL</item>
+    </string-array>
+
 </resources>

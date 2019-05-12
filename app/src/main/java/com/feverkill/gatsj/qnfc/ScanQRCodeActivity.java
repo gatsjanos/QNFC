@@ -8,9 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -28,6 +32,12 @@ public class ScanQRCodeActivity extends AppCompatActivity
     CameraSource cameraSource;
     final int RequestCameraPermissionID = 1001;
 
+    String ElozoBeolvasottQRCode = "";
+
+    int CameraWidth = 640;
+    int CameraHeight = 480;
+
+    Button Btn_accept_this_text;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -62,7 +72,41 @@ public class ScanQRCodeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qrcode);
 
+
+        Btn_accept_this_text = findViewById(R.id.btn_accept_this_text);
+        Btn_accept_this_text.setEnabled(false);
+        Btn_accept_this_text.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                String buff = String.valueOf(txtResult.getText());
+                if (!buff.contains("://"))
+                    buff = "http://" + buff;
+
+                Eszk.mainActivity.setEditText_text_to_writeText(buff);
+                finish();
+            }
+        });
+
+
         cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
+
+//        cameraPreview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+//        {
+//            @Override
+//            public void onGlobalLayout()
+//            {
+//                cameraPreview.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                Log.e("WIDTH", String.valueOf(cameraPreview.getWidth()));
+//                Log.e("HEIGHT", String.valueOf(cameraPreview.getHeight()));
+//                cameraPreview.getHolder().setFixedSize(cameraPreview.getWidth(), (int)((float)cameraPreview.getWidth() * (float)CameraHeight / (float)CameraWidth));
+//                Log.e("WIDTH", String.valueOf(cameraPreview.getWidth()));
+//                Log.e("HEIGHT", String.valueOf(cameraPreview.getHeight()));
+//            }
+//        });
+
+
         txtResult = (TextView) findViewById(R.id.txtResult);
 
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -70,8 +114,10 @@ public class ScanQRCodeActivity extends AppCompatActivity
                 .build();
         cameraSource = new CameraSource
                 .Builder(this, barcodeDetector)
-                .setRequestedPreviewSize(640, 480)
+                .setRequestedPreviewSize(CameraWidth, CameraHeight)
                 .build();
+
+
         //Add Event
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback()
         {
@@ -109,6 +155,7 @@ public class ScanQRCodeActivity extends AppCompatActivity
             }
         });
 
+
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>()
         {
             @Override
@@ -123,17 +170,24 @@ public class ScanQRCodeActivity extends AppCompatActivity
                 final SparseArray<Barcode> qrcodes = detections.getDetectedItems();
                 if (qrcodes.size() != 0)
                 {
-                    txtResult.post(new Runnable()
+
+                    if (!ElozoBeolvasottQRCode.equals(qrcodes.valueAt(0).displayValue))
                     {
-                        @Override
-                        public void run()
+                        ElozoBeolvasottQRCode = qrcodes.valueAt(0).displayValue;
+                        //Log.e("QR CODE", qrcodes.valueAt(0).displayValue);
+
+                        txtResult.post(new Runnable()
                         {
-                            //Create vibrate
-                            Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(100);
-                            txtResult.setText(qrcodes.valueAt(0).displayValue);
-                        }
-                    });
+                            @Override
+                            public void run()
+                            {
+                                //Create vibrate
+                                Eszk.vibrator.vibrate(250);
+                                txtResult.setText(qrcodes.valueAt(0).displayValue);
+                                Btn_accept_this_text.setEnabled(true);
+                            }
+                        });
+                    }
                 }
             }
         });
