@@ -47,7 +47,7 @@ public class WriteNFCActivity extends AppCompatActivity
 //        boolean messageWrittenSuccessfully = NFCHelper.sendNFCMessage("Teszt Payload 123", intent);
         boolean messageWrittenSuccessfully = NFCHelper.sendNFCUri(Uri.parse("https://github.com/gatsjanos"), intent);
 
-        textViewResult.setText((messageWrittenSuccessfully) ? "Successful Written to Tag!" : "Something When wrong. Try Again!");
+        textViewResult.setText((messageWrittenSuccessfully) ? "Successfully Written to Tag!" : "Something Went wrong. Try Again!");
     }
 }
 

@@ -24,5 +24,16 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        final Button btn_scan_QRcode = findViewById(R.id.btn_scan_QRcode);
+        btn_scan_QRcode.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), ScanQRCodeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
