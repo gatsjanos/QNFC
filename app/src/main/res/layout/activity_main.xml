@@ -27,8 +27,9 @@
         android:layout_marginTop="8dp"
         android:text="Scan QR Code"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_write_nfc_tag" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_emulate_nfc_tag" />
 
     <EditText
         android:id="@+id/editText_text_to_write"
@@ -53,6 +54,7 @@
         android:layout_marginTop="8dp"
         android:entries="@array/Write_modes_array"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,5 +70,18 @@
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_emulate_nfc_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Emulate NFC TAG"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_nfc_tag" />
 
 </android.support.constraint.ConstraintLayout>

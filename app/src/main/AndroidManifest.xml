@@ -5,6 +5,9 @@
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
+    <uses-feature
+        android:name="android.hardware.nfc.hce"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -24,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".WriteNFCActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -37,11 +39,21 @@
                     android:scheme="vnd.android.nfc" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ScanQRCodeActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".EmulateNFCActivity">
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="ext"
+                    android:pathPrefix="/feverkill.com:qnfc"
+                    android:scheme="vnd.android.nfc" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

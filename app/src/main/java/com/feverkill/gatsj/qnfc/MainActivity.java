@@ -32,6 +32,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        final Button btn_emulate_nfc_tag = findViewById(R.id.btn_emulate_nfc_tag);
+        btn_emulate_nfc_tag.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), EmulateNFCActivity.class);
+                startActivity(intent);
+            }
+        });
+
         final Button btn_scan_QRcode = findViewById(R.id.btn_scan_QRcode);
         btn_scan_QRcode.setOnClickListener(new View.OnClickListener()
         {
